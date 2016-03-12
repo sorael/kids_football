@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+    {% if contact %}
+        <h1 class="text-center">TEST</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <br>
+                    <div>{{ contact.first_name }}</div>
+                    <div>{{ contact.last_name }}</div>
+                    <div>{{ contact.date_of_birth }}</div>
+                </div>
+                <div class="col-md-3">
+                    {% if user.is_authenticated %}
+                        <p><a href="{% url 'edit_person' %}">Edit</a></p>
+                        <p><a href="{% url 'logout' %}">Logout</a></p>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="text-center">Database is empty!</h1>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,16 @@
+ #form_ajax_error, .errorlist > li{
+    color: red;
+    list-style: none;
+}
+
+#loading{
+    display: none;
+}
+
+#form_ajax{
+    display: none;
+}
+
+#form_ajax_error{
+    display: none;
+}
