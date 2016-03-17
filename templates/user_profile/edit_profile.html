@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Edit profile page{% endblock %}
+
+{% block extra_head %}
+    <script type="text/javascript" src="{% static 'js/jquery.form.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/edit_profile.js' %}"></script>
+    {{ form.media }}
+{% endblock extra_head %}
+
+{% block content %}
+    <h1 class="text-center">Edit your profile</h1>
+    {% if user.is_authenticated %}
+    <div class="container">
+        <form action="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data" id="editform">
+            {% csrf_token %}
+            {{ edit_profile_form.non_field_errors }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="main">
+                        <div class="field">
+                            <p>
+                                {{ edit_profile_form.team.errors }}
+                                <label for="{{ edit_profile_form.team.id_for_label }}">Команда:</label>
+                                {{ edit_profile_form.team }}
+                            </p>
+                            <p>
+                                {{ edit_profile_form.date_of_birth.errors }}
+                                <label for="{{ edit_profile_form.date_of_birth.id_for_label }}">Дата рождения:</label>
+                                {{ edit_profile_form.date_of_birth }}
+                            </p>
+                            <p>
+                                <label for="{{ edit_profile_form.photo.id_for_label }}">Photo:</label>
+                                {{ edit_profile_form.photo }}
+                            </p>
+                        </div>
+                    </div>
+                    {% if profile.photo %}
+                        <img id="contact_photo_id" src="{{ profile.photo.url }}" />
+                    {% else %}
+                        <img src="{% static 'img/img.png' %}" />
+                    {% endif %}
+
+                </div>
+                <div class="col-md-6">
+                    <div class="main">
+                        <div class="field">
+                            <p>{{ edit_user_form.username.errors }}
+                                <label for="{{ edit_user_form.username.id_for_label }}">Имя пользователя:</label>
+                                {{ edit_user_form.username }}
+                                <small>{{ edit_user_form.username.help_text }}</small>
+                            </p>
+                            <p>{{ edit_user_form.email.errors }}
+                                <label for="{{ edit_user_form.email.id_for_label }}">Email:</label>
+                                {{ edit_user_form.email }}
+                            </p>
+                            <p>
+                                {{ edit_user_form.first_name.errors }}
+                                <label for="{{ edit_user_form.first_name.id_for_label }}">Имя:</label>
+                                {{ edit_user_form.first_name }}
+                            </p>
+                            <p>
+                                {{ edit_user_form.last_name.errors }}
+                                <label for="{{ edit_user_form.last_name.id_for_label }}">Фамилия:</label>
+                                {{ edit_user_form.last_name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div id="loading">
+                <img src="{% static 'img/loading.gif' %}">
+            </div>
+            <div id="form_ajax">
+                <span>Changes have been saved.</span>
+            </div>
+            <div id="form_ajax_error">
+                <span>Can not submit data due to errors.</span>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary" id="sendbutton"/>
+            <input type="hidden" name="next" value="/" />
+            <a id="index" href="{% url 'index' %}">Cancel</a>
+            <br>
+            <br>
+            <br>
+            <br>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

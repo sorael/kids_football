@@ -3,27 +3,47 @@
 {% load staticfiles %}
 
 {% block content %}
-    {% if contact %}
         <h1 class="text-center">TEST</h1>
         <div class="container">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <br>
-                    <div>{{ contact.first_name }}</div>
-                    <div>{{ contact.last_name }}</div>
-                    <div>{{ contact.date_of_birth }}</div>
+                    {% for game in all_games %}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div>Название игры: {{ game.title }}</div>
+                                        <div>Вызов бросила команды: {{ game.team_creator }}</div>
+                                        {% if game.team_accepted == None %}
+                                            <div>Вызов приняла команда: Вызов пока не принят</div>
+                                        {% else %}
+                                            <div>Вызов приняла команда: {{ game.team_accepted }}</div>
+                                        {% endif %}
+                                        <div>Дата и время начала: {{ game.date_time_start }}</div>
+                                        <div>Тип игры: {{ game.get_type_display }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div>Где будут играть: {{ game.location|linebreaks }}</div>
+                                        <div>Длительность: {{ game.duration }}</div>
+                                        <div>Возрастная категория: {{ game.get_age_display }}</div>
+                                        {% if game.winner == None %}
+                                            <div>Победитель: скоро определится</div>
+                                        {% else %}
+                                            <div>Победитель: {{ game.winner }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer"><a href="#">Принять вызов</a></div>
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     {% if user.is_authenticated %}
-                        <p><a href="{% url 'edit_person' %}">Edit</a></p>
-                        <p><a href="{% url 'logout' %}">Logout</a></p>
-                    {% else %}
-                        <a href="{% url 'login' %}">Login</a>
+                        <p>{{ user.username }}</p>
                     {% endif %}
                 </div>
             </div>
         </div>
-    {% else %}
-        <h1 class="text-center">Database is empty!</h1>
-    {% endif %}
 {% endblock content %}

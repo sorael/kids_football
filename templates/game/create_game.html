@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Страница создания игры{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" media="screen, projection"/>
+
+    <script type="text/javascript" src="{% static 'js/moment-with-locales.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/transition.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/collapse.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    {{ form.media }}
+{% endblock extra_head %}
+
+{% block content %}
+    <h1 class="text-center">Создать игру</h1>
+    {% if user.is_authenticated %}
+    <div class="container">
+        <form action="{% url 'create_game' %}" method="post" enctype="multipart/form-data" id="editform">
+            {% csrf_token %}
+            {{ create_game_form.non_field_errors }}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="main">
+                        <div class="field">
+                            <p>
+                                {{ create_game_form.title.errors }}
+                                <label for="{{ create_game_form.title.id_for_label }}">title:</label>
+                                {{ create_game_form.title }}
+                            </p>
+                            <p>
+                                {{ create_game_form.date_time_start.errors }}
+                                <label for="{{ create_game_form.date_time_start.id_for_label }}">date_time_start:</label>
+                                {{ create_game_form.date_time_start }}
+                            </p>
+                            <p>
+                                {{ create_game_form.type.errors }}
+                                <label for="{{ create_game_form.type.id_for_label }}">type:</label>
+                                {{ create_game_form.type }}
+                            </p>
+                            <p>
+                                {{ create_game_form.location.errors }}
+                                <label for="{{ create_game_form.location.id_for_label }}">location:</label>
+                                {{ create_game_form.location }}
+                            </p>
+                            <p>
+                                {{ create_game_form.duration.errors }}
+                                <label for="{{ create_game_form.duration.id_for_label }}">duration:</label>
+                                {{ create_game_form.duration }}
+                            </p>
+                            <p>
+                                {{ create_game_form.age.errors }}
+                                <label for="{{ create_game_form.age.id_for_label }}">age:</label>
+                                {{ create_game_form.age }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div id="loading">
+                <img src="{% static 'img/loading.gif' %}">
+            </div>
+            <div id="form_ajax">
+                <span>Game have been created.</span>
+            </div>
+            <div id="form_ajax_error">
+                <span>Can not submit data due to errors.</span>
+            </div>
+            <input type="submit" value="Создать" class="btn btn-primary" id="sendbutton"/>
+            <input type="hidden" name="next" value="/" />
+            <a id="index" href="{% url 'index' %}">Cancel</a>
+            <br>
+            <br>
+            <br>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}
