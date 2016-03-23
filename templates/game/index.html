@@ -8,17 +8,17 @@
             <div class="row">
                 <div class="col-md-10">
                     <br>
-                    {% for game in all_games %}
+                    {% for game in games %}
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div>Название игры: {{ game.title }}</div>
                                         <div>Вызов бросила команды: {{ game.team_creator }}</div>
-                                        {% if game.team_accepted == None %}
-                                            <div>Вызов приняла команда: Вызов пока не принят</div>
-                                        {% else %}
+                                        {% if game.team_accepted %}
                                             <div>Вызов приняла команда: {{ game.team_accepted }}</div>
+                                        {% else %}
+                                            <div>Вызов приняла команда: Вызов пока не принят</div>
                                         {% endif %}
                                         <div>Дата и время начала: {{ game.date_time_start }}</div>
                                         <div>Тип игры: {{ game.get_type_display }}</div>

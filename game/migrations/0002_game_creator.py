@@ -17,14 +17,4 @@ class Migration(migrations.Migration):
             name='creator',
             field=models.ForeignKey(to='user_profile.Profile'),
         ),
-        migrations.AddField(
-            model_name='game',
-            name='team_accepted',
-            field=models.ForeignKey(related_name='team_accepted', blank=True, to='user_profile.Profile', null=True),
-        ),
-        migrations.AddField(
-            model_name='game',
-            name='team_creator',
-            field=models.ForeignKey(related_name='team_creator', to='user_profile.Profile'),
-        ),
     ]

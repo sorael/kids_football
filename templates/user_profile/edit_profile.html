@@ -4,8 +4,6 @@
 {% block title %}Edit profile page{% endblock %}
 
 {% block extra_head %}
-    <script type="text/javascript" src="{% static 'js/jquery.form.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/edit_profile.js' %}"></script>
     {{ form.media }}
 {% endblock extra_head %}
 
@@ -46,15 +44,6 @@
                 <div class="col-md-6">
                     <div class="main">
                         <div class="field">
-                            <p>{{ edit_user_form.username.errors }}
-                                <label for="{{ edit_user_form.username.id_for_label }}">Имя пользователя:</label>
-                                {{ edit_user_form.username }}
-                                <small>{{ edit_user_form.username.help_text }}</small>
-                            </p>
-                            <p>{{ edit_user_form.email.errors }}
-                                <label for="{{ edit_user_form.email.id_for_label }}">Email:</label>
-                                {{ edit_user_form.email }}
-                            </p>
                             <p>
                                 {{ edit_user_form.first_name.errors }}
                                 <label for="{{ edit_user_form.first_name.id_for_label }}">Имя:</label>

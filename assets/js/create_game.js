@@ -19,12 +19,7 @@ $(document).ready(function() {
         },
         success: function(data) {
             if (data['success'] == 'true') {
-                    unblock_form();
-                    $('#contact_photo_id').attr('src', '/uploads/'+ data.photo);
-                    $("#form_ajax").show();
-                    setTimeout(function() {
-                        $("#form_ajax").hide();
-                    }, 3000);
+                $(location).attr("href", '/');
                 }
             else if (data['success'] == 'false') {
                 unblock_form();
