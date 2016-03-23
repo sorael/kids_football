@@ -23,7 +23,7 @@
                 {% csrf_token %}
                 {{ create_game_form.non_field_errors }}
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="main">
                             <div class="field">
                                 <p>
@@ -33,7 +33,7 @@
                                 </p>
                                 <p>
                                     {{ create_game_form.date_time_start.errors }}
-                                    <label for="{{ create_game_form.date_time_start.id_for_label }}">'Дата, время начала:</label>
+                                    <label for="{{ create_game_form.date_time_start.id_for_label }}">Дата, время начала:</label>
                                     {{ create_game_form.date_time_start }}
                                 </p>
                                 <p>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
+                    {% include 'right.html' %}
                 </div>
                 <br>
                 <div id="loading">

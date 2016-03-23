@@ -1,0 +1,10 @@
+<div class="col-md-2">
+    {% if user.is_authenticated %}
+        <div class="list-group">
+            <p><img src="{{ profile.photo.url }}"></p>
+            <p class="list-group-item">Имя: {{ profile.user.first_name }}</p>
+            <p class="list-group-item">Фамилия: {{ profile.user.last_name }}</p>
+            <a href="{% url 'my_games' %}" class="list-group-item">Мои игры</a>
+        </div>
+    {% endif %}
+</div>

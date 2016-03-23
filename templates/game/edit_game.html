@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Редактирование игры{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" media="screen, projection"/>
+    <script type="text/javascript" src="{% static 'js/moment-with-locales.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/transition.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/collapse.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.form.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/create_game.js' %}"></script>
+    {{ form.media }}
+{% endblock extra_head %}
+
+{% block content %}
+    {% if access_denied != 'access_denied' %}
+        <h1 class="text-center">Редактировать игру</h1>
+        {% if user.is_authenticated %}
+        <div class="container">
+            <form action="{% url 'edit_game' game.id  %}" method="post" enctype="multipart/form-data" id="editform">
+                {% csrf_token %}
+                {{ edit_game_form.non_field_errors }}
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="main">
+                            <div class="field">
+                                <p>
+                                    {{ edit_game_form.title.errors }}
+                                    <label for="{{ edit_game_form.title.id_for_label }}">Название:</label>
+                                    {{ edit_game_form.title }}
+                                </p>
+                                <p>
+                                    {{ edit_game_form.date_time_start.errors }}
+                                    <label for="{{ edit_game_form.date_time_start.id_for_label }}">Дата, время начала:</label>
+                                    {{ edit_game_form.date_time_start }}
+                                </p>
+                                <p>
+                                    {{ edit_game_form.type.errors }}
+                                    <label for="{{ edit_game_form.type.id_for_label }}">Тип игры:</label>
+                                    {{ edit_game_form.type }}
+                                </p>
+                                <p>
+                                    {{ edit_game_form.location.errors }}
+                                    <label for="{{ edit_game_form.location.id_for_label }}">Где будем играть:</label>
+                                    {{ edit_game_form.location }}
+                                </p>
+                                <p>
+                                    {{ edit_game_form.duration.errors }}
+                                    <label for="{{ edit_game_form.duration.id_for_label }}">Длительность:</label>
+                                    {{ edit_game_form.duration }}
+                                </p>
+                                <p>
+                                    {{ edit_game_form.age.errors }}
+                                    <label for="{{ edit_game_form.age.id_for_label }}">Возрастная категория:</label>
+                                    {{ edit_game_form.age }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% include 'right.html' %}
+                </div>
+                <br>
+                <div id="loading">
+                    <img src="{% static 'img/loading.gif' %}">
+                </div>
+                <div id="form_ajax">
+                    <span>Game have been created.</span>
+                </div>
+                <div id="form_ajax_error">
+                    <span>Can not submit data due to errors.</span>
+                </div>
+                <input type="submit" value="Редактировать" class="btn btn-primary" id="sendbutton"/>
+                <input type="hidden" name="next" value="/" />
+                <a id="index" href="{% url 'index' %}">Cancel</a>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="container">Вы можете редактировать только игры созданные Вами. <a href="{% url 'my_games' %}">Мои игры</a></div>
+    {% endif %}
+{% endblock %}
